@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+	var mainApp = angular.module("mainApp", []);
+
+	mainApp.factory('MathService', function() {
+		var factory = {};
+
+		factory.multiply = function(a, b) {
+			return a * b
+		}
+		
+		factory.add = function(a, b) {
+			return a + b
+		}
+		factory.sub = function(a, b) {
+			return a - b
+		}
+		return factory;
+	});
+
+	mainApp.service('CalcService', function(MathService) {
+		this.square = function(a) {
+			return MathService.multiply(a, a);
+		}
+		this.add = function(a) {
+			return MathService.add(a, a);
+		}
+		this.sub = function(a) {
+			return MathService.sub(a, a);
+		}
+	});
+
+	mainApp.controller('CalcController', function($scope, CalcService) {
+		$scope.add1 = CalcService.add(20);
+		$scope.square = function() {
+			$scope.result = CalcService.square($scope.number);
+		}
+		
+		$scope.add = function() {
+			$scope.result = CalcService.add($scope.number);
+		}
+		
+		$scope.sub = function() {
+			$scope.result = CalcService.sub($scope.number);
+		}
+	});
+</script>
+</head>
+<body>
+	<div ng-app="mainApp">
+		<div ng-controller="CalcController">
+			<input type="number" ng-model="number">
+			<button ng-click="square()">
+				X<sup>2</sup>
+			</button>
+			<button ng-click="add()">A + B</button>
+			<button ng-click="sub()">A - B</button>
+			<!-- <button ng-click = "add()">A + B</button>
+		<button ng-click = "sub()">A - B</button> -->
+
+			{{result}}
+			{{add1}}
+			<!-- </br>{{add}}</br>{{sub}} -->
+		</div>
+	</div>
+</body>
+</html>

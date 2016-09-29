@@ -1,0 +1,6 @@
+com\mediAssist\Application.class
+com\mediAssist\controller\ProjectController.class
+com\mediAssist\service\impl\ProjectServiceImpl.class
+com\mediAssist\repository\ProjectRepository.class
+com\mediAssist\repository\impl\ProjectRepositoryImpl.class
+com\mediAssist\service\ProjectService.class

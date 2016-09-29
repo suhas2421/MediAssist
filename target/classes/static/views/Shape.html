@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+	var mainApp = angular.module("mainApp",[])
+	
+	mainApp.controller('circleController', function($scope){
+		$scope.message = "In Circle Controller";
+		$scope.type="Circle";
+	});
+	
+	mainApp.controller("squareController", function($scope){
+		$scope.message="In Square Controller";
+		$scope.type="Square";
+	});
+	
+</script>
+</head>
+<body>
+
+	<div ng-app="mainApp">
+		<div ng-controller="circleController">
+			<h1>{{message}}</h1></br>{{type}}
+		</div>
+		<div ng-controller="squareController">
+			<h1>{{message}}</h1></br>{{type}}
+		</div>
+	</div>
+</body>
+</html>
