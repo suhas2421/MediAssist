@@ -17,14 +17,11 @@ public class FileUploadController {
 
 	/**
 	 * Upload single file using Spring Controller
-	 */
+	 
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public @ResponseBody String uploadFileHandler(String name, MultipartFile file) {
 
-		System.out.println(name);
-		System.out.println(file);
-		
-		if (!file.isEmpty()) {
+		/*if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
 
@@ -49,23 +46,29 @@ public class FileUploadController {
 		} else {
 			return "You failed to upload " + name + " because the file was empty.";
 		}
-	}
+	}*/
 
 	/**
 	 * Upload multiple file using Spring Controller
 	 */
-	@RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST, consumes="multipart/form-data")
 	public @ResponseBody
-	String uploadMultipleFileHandler(@RequestParam("name") String[] names,
+	String uploadMultipleFileHandler(@RequestParam("name") String names,
 			@RequestParam("file") MultipartFile[] files) {
+		System.out.println(files.length);
+		/*if (files.length != names.length)
+			return "Mandatory information missing";*/
 
-		if (files.length != names.length)
-			return "Mandatory information missing";
-
+		
+		 //File convFile = new File(file.getOriginalFilename());
+		 
+		 
 		String message = "";
 		for (int i = 0; i < files.length; i++) {
 			MultipartFile file = files[i];
-			String name = names[i];
+			System.out.println(file.getOriginalFilename());
+			System.out.println(file.getSize());
+			//String name = names[i];
 			try {
 				byte[] bytes = file.getBytes();
 
@@ -77,18 +80,18 @@ public class FileUploadController {
 
 				// Create the file on server
 				File serverFile = new File(dir.getAbsolutePath()
-						+ File.separator + name);
+						+ File.separator + "temp");
 				BufferedOutputStream stream = new BufferedOutputStream(
 						new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
 
 
-				message = message + "You successfully uploaded file=" + name;
+				message = message + "You successfully uploaded file=" + "temp";
 			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
+				return "You failed to upload " + "temp" + " => " + e.getMessage();
 			}
 		}
-		return message;
+		return null;
 	}
 }
